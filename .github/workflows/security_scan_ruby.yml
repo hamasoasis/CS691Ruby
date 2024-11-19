@@ -1,13 +1,45 @@
 name: Workflow for Ruby using Snyk and Trivy
-on: push
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+  pull_request:
+
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/ruby@master
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Ruby environment and install dependencies
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2' # Adjust to match your Ruby version
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
+      # Step 3: Run Snyk to check for vulnerabilities
+      - name: Run Snyk
+        uses: snyk/actions/ruby@v1.15.1 # Use the latest stable version
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN_3 }}
         with:
           args: --severity-threshold=high
+
+      # Step 4: Run Trivy to scan for vulnerabilities
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.45.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.45.0_Linux-64bit.deb
+
+      - name: Run Trivy Dependency Scan
+        run: trivy fs --severity HIGH --no-progress .
