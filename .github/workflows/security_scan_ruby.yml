@@ -1,0 +1,13 @@
+name: Workflow for Ruby using Snyk and Trivy
+on: push
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/ruby@master
+        env:
+          SNYK_TOKEN_3: ${{ secrets.SNYK_TOKEN_3 }}
+        with:
+          args: --severity-threshold=high
