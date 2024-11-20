@@ -82,4 +82,4 @@ jobs:
       - name: Run Trivy Filesystem Scan (for Ruby dependencies)
         run: |
           # Running Trivy scan on Gemfile directory
-          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+          trivy fs --security-checks vuln --severity CRITICAL,HIGH,MEDIUM,LOW --exit-code 1 .
