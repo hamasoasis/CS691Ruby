@@ -1,5 +1,12 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
-gem 'rails', '~> 6.1.7'
-gem 'puma', '~> 5.0'
-gem 'sprockets-rails', '~> 3.2.2'
+source "https://rubygems.org"
+
+# gem "rails"
+gem 'rails'
+gem 'sinatra'
+gem 'devise'
+gem 'nokogiri'
+gem 'rspec'
+gem 'sidekiq'
+
