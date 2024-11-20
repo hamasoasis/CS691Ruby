@@ -1,0 +1,8 @@
+/vendor/
+*.gem
+gem 'rails'
+gem 'sinatra'
+gem 'devise'
+gem 'nokogiri'
+gem 'rspec'
+gem 'sidekiq'
