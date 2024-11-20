@@ -25,10 +25,10 @@ jobs:
       - name: Install Bundler
         run: gem install bundler
 
-      - name: Check if gemfile exists
+      - name: Check if Gemfile exists
         run: |
-          if [ ! -f gemfile ]; then
-            echo "gemfile not found, exiting.";
+          if [ ! -f Gemfile ]; then
+            echo "Gemfile not found, exiting.";
             exit 1;
           fi
 
@@ -68,7 +68,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/trivy
-          key: trivy-db-${{ runner.os }}-${{ hashFiles('**/gemfile.lock') }}
+          key: trivy-db-${{ runner.os }}-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             trivy-db-${{ runner.os }}-
 
