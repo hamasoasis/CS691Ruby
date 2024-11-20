@@ -72,5 +72,14 @@ jobs:
           restore-keys: |
             trivy-db-${{ runner.os }}-
 
-      - name: Run Trivy Filesystem Scan
-        run: trivy fs --exit-code 0 .
+      - name: Check if Gemfile.lock exists
+        run: |
+          if [ ! -f Gemfile.lock ]; then
+            echo "Gemfile.lock not found, exiting.";
+            exit 1;
+          fi
+
+      - name: Run Trivy Filesystem Scan (for Ruby dependencies)
+        run: |
+          # Running Trivy scan on Gemfile directory
+          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
