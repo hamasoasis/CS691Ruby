@@ -25,6 +25,13 @@ jobs:
       - name: Install Bundler
         run: gem install bundler
 
+      - name: Check if Gemfile exists
+        run: |
+          if [ ! -f Gemfile ]; then
+            echo "Gemfile not found, exiting.";
+            exit 1;
+          fi
+
       - name: Install dependencies
         run: bundle install
 
@@ -67,4 +74,3 @@ jobs:
 
       - name: Run Trivy Filesystem Scan
         run: trivy fs --exit-code 0 .
-
